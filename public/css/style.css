@@ -1,0 +1,273 @@
+/* =========================================================
+   CLARA'S KITCHENETTE — Feuille de style
+   Organisée par zones : variables, base, header, hero,
+   sections génériques, cartes, menu, panier, tutos, avis,
+   à propos, espace pro, footer, divers.
+   ========================================================= */
+
+/* ---------- 1. VARIABLES (palette & typographie de la marque) ---------- */
+:root{
+  --aubergine:#4E2337; --aubergine-ink:#2B1B12; --terracotta:#D2601F; --gold:#E3A72F;
+  --cream:#FBF7F0; --cream-deep:#F2E9DC; --white:#FFFFFF; --line:#E6DAC5;
+  --text:#2B1B12; --text-soft:#7A6754;
+  --serif:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --radius:3px; --radius-pill:999px;
+  --shadow-soft:0 1px 3px rgba(43,27,18,.09);
+}
+
+/* ---------- 2. BASE ---------- */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:var(--sans);color:var(--text);background:var(--cream);line-height:1.55;
+  -webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+@media(max-width:640px){.wrap{padding:0 18px;}}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;line-height:1.15;margin:0 0 .4em;color:var(--aubergine);}
+p{margin:0 0 1em;}
+.eyebrow{font-size:12px;letter-spacing:.06em;color:var(--terracotta);font-weight:600;margin:0 0 6px;}
+.pill-tag{display:inline-block;font-size:11px;letter-spacing:.04em;font-weight:700;color:var(--aubergine);
+  background:var(--cream-deep);border-radius:var(--radius-pill);padding:3px 10px;}
+:focus-visible{outline:2.5px solid var(--terracotta);outline-offset:2px;}
+.view{display:none;}
+.view.active{display:block;}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+/* ---------- 3. UTILITAIRES ---------- */
+.no-top{padding-top:0;}
+.mt-sm{margin-top:6px;}
+.h-sm{font-size:17px;}
+.text-note{font-size:13.5px;color:var(--text-soft);margin:0;}
+.btn-block{width:100%;justify-content:center;}
+
+/* ---------- 4. BOUTONS ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:var(--radius-pill);
+  font-size:15px;font-weight:600;border:1.5px solid transparent;transition:transform .15s ease,background .15s ease;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--terracotta);color:#fff;}
+.btn-primary:hover{background:#b8511a;}
+.btn-outline{border-color:var(--aubergine);color:var(--aubergine);background:transparent;}
+.btn-outline:hover{background:var(--aubergine);color:#fff;}
+.btn-ghost{background:transparent;color:var(--aubergine);padding:8px 10px;}
+.btn-sm{padding:7px 14px;font-size:13px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* ---------- 5. LOADING OVERLAY ---------- */
+.loading-overlay{position:fixed;inset:0;background:var(--cream);z-index:100;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:10px;text-align:center;padding:20px;}
+.loading-title{font-family:var(--serif);font-size:22px;color:var(--aubergine);font-weight:700;}
+.loading-text{font-size:13.5px;color:var(--text-soft);max-width:34ch;}
+
+/* ---------- 6. HEADER / MASTHEAD ---------- */
+.masthead{background:var(--white);border-bottom:2px solid var(--aubergine);position:sticky;top:0;z-index:40;}
+.masthead-top{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:16px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-word{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--aubergine);}
+.brand-word em{font-style:italic;color:var(--terracotta);}
+.brand-sub{display:block;font-size:10px;letter-spacing:.12em;color:var(--text-soft);margin-top:1px;}
+.head-actions{display:flex;align-items:center;gap:10px;}
+.icon-btn{position:relative;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);
+  background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--aubergine);}
+.icon-btn:hover{border-color:var(--terracotta);}
+.cart-count{position:absolute;top:-5px;right:-5px;background:var(--terracotta);color:#fff;font-size:10px;
+  font-weight:700;min-width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 2px;}
+.masthead-nav{border-top:1px solid var(--line);}
+.nav-inner{display:flex;gap:2px;overflow-x:auto;}
+.nav-link{font-size:14px;font-weight:600;color:var(--text-soft);padding:12px 14px;white-space:nowrap;
+  border-bottom:2px solid transparent;}
+.nav-link:hover{color:var(--aubergine);}
+.nav-link.active{color:var(--terracotta);border-bottom-color:var(--terracotta);}
+
+/* ---------- 7. HERO ---------- */
+.hero{padding:56px 0 44px;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:28px;}}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.hero h1{font-size:44px;letter-spacing:-.01em;}
+@media(max-width:640px){.hero h1{font-size:32px;}}
+.hero-sub{font-size:17px;color:var(--text-soft);max-width:46ch;}
+.hero-cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.hero-media{aspect-ratio:4/3;border-radius:6px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,var(--gold),var(--terracotta));animation:fadein .7s ease both;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.hero-media img{width:100%;height:100%;object-fit:cover;}
+.hero-media .thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);}
+.hero-media .thumb-fallback svg{width:72px;height:72px;}
+
+/* ---------- 8. SECTION GÉNÉRIQUE ---------- */
+.section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:22px;}
+.section-head h2{font-size:26px;margin:0;}
+.section-head a{font-size:14px;font-weight:600;color:var(--terracotta);white-space:nowrap;}
+
+/* ---------- 9. FEATURE (à la une) ---------- */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;background:var(--white);
+  border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+@media(max-width:760px){.feature{grid-template-columns:1fr;}}
+.feature-media{aspect-ratio:5/4;position:relative;background:linear-gradient(135deg,var(--terracotta),var(--aubergine));}
+.feature-media img{width:100%;height:100%;object-fit:cover;}
+.feature-media .thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);}
+.feature-body{padding:8px 34px 8px 0;}
+@media(max-width:760px){.feature-body{padding:0 24px 28px;}}
+.feature-body h3{font-size:26px;}
+.feature-price{font-family:var(--serif);font-size:20px;color:var(--terracotta);font-weight:700;margin:10px 0 16px;}
+
+/* ---------- 10. GRILLES DE CARTES (essentiels / tutos) ---------- */
+.grid{display:grid;gap:22px;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+@media(max-width:860px){.grid-3{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.grid-3{grid-template-columns:1fr;}}
+.card{background:var(--white);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
+.card-media{aspect-ratio:4/3;position:relative;background:linear-gradient(135deg,var(--gold),var(--terracotta));}
+.card-media img{width:100%;height:100%;object-fit:cover;}
+.card-media .thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);}
+.card-media .thumb-fallback svg{width:40px;height:40px;}
+.card-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column;}
+.card-body h3{font-size:17px;margin-bottom:6px;}
+.card-body p{font-size:14px;color:var(--text-soft);margin-bottom:10px;flex:1;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
+.price-tag{font-family:var(--serif);font-weight:700;color:var(--terracotta);}
+
+/* ---------- 11. MENU / CARTE (liste éditoriale) ---------- */
+.cat-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;}
+.cat-btn{padding:8px 16px;border-radius:var(--radius-pill);border:1.5px solid var(--line);background:var(--white);
+  font-size:13px;font-weight:600;color:var(--text-soft);}
+.cat-btn.active{background:var(--aubergine);border-color:var(--aubergine);color:#fff;}
+.menu-list{border-top:1px solid var(--line);}
+.menu-row{display:grid;grid-template-columns:64px 1fr auto auto;gap:16px;align-items:center;
+  padding:18px 0;border-bottom:1px solid var(--line);}
+@media(max-width:560px){.menu-row{grid-template-columns:52px 1fr;row-gap:10px;}
+  .menu-row .qty-stepper,.menu-row .add-btn{grid-column:2;}}
+.menu-thumb{width:64px;height:64px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),var(--terracotta));}
+.menu-thumb img{width:100%;height:100%;object-fit:cover;}
+.menu-thumb .thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.9);}
+.menu-thumb .thumb-fallback svg{width:24px;height:24px;}
+.menu-info h3{font-size:17px;margin:0 0 3px;display:flex;align-items:center;gap:8px;}
+.menu-info .pill-tag{font-size:10px;padding:2px 8px;}
+.menu-info p{font-size:13.5px;color:var(--text-soft);margin:0;max-width:52ch;}
+.menu-price{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--terracotta);white-space:nowrap;}
+.qty-stepper{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:var(--radius-pill);padding:4px;}
+.qty-stepper button{width:24px;height:24px;border-radius:50%;border:none;background:var(--cream-deep);color:var(--aubergine);
+  font-size:15px;font-weight:700;line-height:1;}
+.qty-stepper span{min-width:16px;text-align:center;font-weight:700;font-size:14px;}
+
+/* ---------- 12. PANIER (tiroir latéral) ---------- */
+.cart-overlay{position:fixed;inset:0;background:rgba(43,27,18,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s;}
+.cart-overlay.open{opacity:1;pointer-events:auto;}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,92vw);background:var(--cream);z-index:61;
+  transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.15);}
+.cart-drawer.open{transform:translateX(0);}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--white);}
+.cart-head h3{margin:0;font-size:19px;}
+.cart-body{flex:1;overflow-y:auto;padding:16px 22px;}
+.cart-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);}
+.cart-item-name{font-weight:600;font-size:14.5px;}
+.cart-item-meta{font-size:12.5px;color:var(--text-soft);}
+.cart-item-remove{color:var(--terracotta);font-size:12px;font-weight:600;background:none;border:none;padding:0;margin-top:4px;}
+.cart-empty{text-align:center;padding:40px 10px;color:var(--text-soft);}
+.cart-empty svg{width:44px;height:44px;color:var(--line);margin-bottom:10px;}
+.cart-foot{padding:16px 22px 22px;border-top:1px solid var(--line);background:var(--white);}
+.cart-total{display:flex;justify-content:space-between;font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:14px;}
+
+/* ---------- 13. CHAMPS DE FORMULAIRE (communs) ---------- */
+.field{margin-bottom:10px;}
+.field label,.field-label{display:block;font-size:12.5px;font-weight:600;color:var(--text-soft);margin-bottom:4px;}
+.field input,.field textarea,.field select{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--radius);
+  font-family:inherit;font-size:14px;background:#fff;color:var(--text);}
+.field textarea{resize:vertical;min-height:64px;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--terracotta);}
+
+/* ---------- 14. TUTOS ---------- */
+.tuto-detail{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:28px;margin-bottom:30px;}
+.tuto-detail .back{font-size:13px;font-weight:600;color:var(--terracotta);margin-bottom:16px;display:inline-block;}
+.tuto-media{aspect-ratio:16/9;border-radius:4px;overflow:hidden;margin-bottom:20px;background:var(--cream-deep);position:relative;}
+.tuto-media iframe{width:100%;height:100%;border:0;}
+.tuto-media img{width:100%;height:100%;object-fit:cover;}
+.tuto-cols{display:grid;grid-template-columns:1fr 1.4fr;gap:30px;}
+@media(max-width:700px){.tuto-cols{grid-template-columns:1fr;}}
+.tuto-cols h4{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--terracotta);margin-bottom:10px;}
+.tuto-cols ul,.tuto-cols ol{padding-left:20px;margin:0;font-size:14.5px;}
+.tuto-cols li{margin-bottom:8px;}
+.video-link-btn{display:inline-flex;align-items:center;gap:8px;background:var(--aubergine);color:#fff;padding:12px 18px;border-radius:var(--radius-pill);font-weight:600;font-size:14px;}
+
+/* ---------- 15. AVIS ---------- */
+.rating-summary{display:flex;align-items:center;gap:16px;margin-bottom:30px;background:var(--white);border:1px solid var(--line);
+  border-radius:6px;padding:20px 24px;}
+.rating-big{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--aubergine);}
+.stars{color:var(--gold);display:inline-flex;gap:2px;}
+.stars svg{width:16px;height:16px;}
+.review-form{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:34px;}
+.star-picker{display:flex;gap:6px;margin:6px 0 14px;}
+.star-picker button{background:none;border:none;padding:2px;color:var(--line);}
+.star-picker button.on{color:var(--gold);}
+.star-picker svg{width:26px;height:26px;}
+.review-item{border-bottom:1px solid var(--line);padding:18px 0;}
+.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.review-name{font-weight:700;font-size:14.5px;}
+.review-date{font-size:12px;color:var(--text-soft);}
+.review-empty{text-align:center;padding:34px;color:var(--text-soft);background:var(--white);border:1px dashed var(--line);border-radius:6px;}
+
+/* ---------- 16. À PROPOS ---------- */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;}}
+.info-block{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:22px 24px;margin-bottom:16px;}
+.info-block h3{font-size:15px;margin-bottom:8px;}
+.info-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;font-size:14.5px;}
+.info-row svg{width:18px;height:18px;color:var(--terracotta);flex-shrink:0;margin-top:2px;}
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:16px 0;font-size:15px;font-weight:700;
+  display:flex;justify-content:space-between;align-items:center;color:var(--aubergine);font-family:var(--serif);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .2s ease;font-size:14.5px;color:var(--text-soft);}
+.faq-a p{padding-bottom:16px;margin:0;}
+.faq-item.open .faq-a{max-height:200px;}
+.faq-item.open .faq-q svg{transform:rotate(45deg);}
+.faq-q svg{transition:transform .2s;width:16px;height:16px;}
+
+/* ---------- 17. ESPACE PRO ---------- */
+.admin-lock{max-width:380px;margin:60px auto;text-align:center;background:var(--white);border:1px solid var(--line);
+  border-radius:6px;padding:34px 30px;}
+.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:26px;}
+.admin-tab-btn{padding:9px 16px;border-radius:var(--radius-pill);border:1.5px solid var(--line);background:var(--white);
+  font-size:13.5px;font-weight:600;}
+.admin-tab-btn.active{background:var(--aubergine);color:#fff;border-color:var(--aubergine);}
+.admin-panel{display:none;}
+.admin-panel.active{display:block;}
+.admin-form{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:22px;margin-bottom:24px;}
+.admin-form h4{font-size:15px;margin-bottom:14px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+.form-grid .field-full{grid-column:1/-1;}
+.form-actions{display:flex;gap:10px;margin-top:6px;}
+.admin-list-item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--white);
+  border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin-bottom:8px;}
+.admin-list-item .meta{font-size:12.5px;color:var(--text-soft);}
+.admin-item-actions{display:flex;gap:6px;flex-shrink:0;}
+.icon-action{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:flex;
+  align-items:center;justify-content:center;color:var(--text-soft);}
+.icon-action:hover{border-color:var(--terracotta);color:var(--terracotta);}
+.icon-action svg{width:14px;height:14px;}
+.admin-note{font-size:13px;color:var(--text-soft);background:var(--cream-deep);border-radius:6px;padding:12px 16px;margin-bottom:20px;}
+
+/* ---------- 18. FOOTER ---------- */
+footer{background:var(--aubergine);color:#F2E9DC;padding:44px 0 26px;margin-top:40px;}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px;margin-bottom:30px;}
+@media(max-width:700px){.foot-grid{grid-template-columns:1fr;}}
+footer h4{color:#fff;font-family:var(--serif);font-size:16px;margin-bottom:10px;}
+footer a{color:#E7D9C6;font-size:14px;}
+.foot-desc{color:#E7D9C6;font-size:14px;max-width:34ch;}
+.foot-links{display:flex;flex-direction:column;gap:8px;}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.15);padding-top:18px;font-size:12.5px;color:#C9AF9A;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+/* ---------- 19. BOUTON WHATSAPP FLOTTANT & TOAST ---------- */
+.wa-float{position:fixed;bottom:22px;right:22px;z-index:50;width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.wa-float svg{width:28px;height:28px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--aubergine-ink);
+  color:#fff;padding:12px 22px;border-radius:var(--radius-pill);font-size:14px;font-weight:600;z-index:80;
+  opacity:0;transition:all .25s ease;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
