@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clara's Kitchenette — Cuisine africaine faite maison à Lyon, livrée en France</title>
+<meta name="description" content="Clara's Kitchenette : cuisine togolaise, ivoirienne, malienne et burkinabée faite maison à Lyon. Commande en ligne, livraison partout en France, tutos de cuisine et recettes en vidéo.">
+<meta name="keywords" content="cuisine africaine Lyon, traiteur africain France, plats togolais, cuisine ivoirienne, cuisine malienne, livraison repas africain, attiéké, foutou, riz sauce graine, bissap">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="restaurant.menu">
+<meta property="og:site_name" content="Clara's Kitchenette">
+<meta property="og:title" content="Clara's Kitchenette — Cuisine africaine faite maison, livrée partout en France">
+<meta property="og:description" content="Spécialités togolaises, ivoiriennes, maliennes et burkinabées faites maison à Lyon. Commandez en ligne, recevez la confirmation sur WhatsApp.">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#4E2337">
+
+<!-- Fiche d'identité locale pour les moteurs de recherche (SEO local) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FoodEstablishment",
+  "name": "Clara's Kitchenette",
+  "servesCuisine": ["African", "Togolese", "Ivorian", "Malian", "Burkinabe", "European"],
+  "address": { "@type": "PostalAddress", "addressLocality": "Lyon", "addressCountry": "FR" },
+  "telephone": "+33677949139",
+  "areaServed": { "@type": "Country", "name": "France" },
+  "priceRange": "€€",
+  "menu": "#carte",
+  "acceptsReservations": "False"
+}
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Écran affiché pendant le chargement des données (le temps que le serveur réponde) -->
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loading-title">Clara's Kitchenette</div>
+  <div class="loading-text" id="loadingText">Chargement du site…</div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="masthead">
+  <div class="wrap masthead-top">
+    <a href="#accueil" class="brand" aria-label="Clara's Kitchenette — Accueil">
+      <svg width="38" height="38" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="172" fill="none" stroke="#E3A72F" stroke-width="10"/><text x="200" y="245" text-anchor="middle" font-family="Georgia,serif" font-size="150" font-weight="700" fill="#4E2337">CK</text></svg>
+      <span><span class="brand-word">Clara's <em>Kitchenette</em></span><span class="brand-sub">CUISINE D'AFRIQUE · LYON</span></span>
+    </a>
+    <div class="head-actions">
+      <a class="icon-btn" id="waHeaderBtn" href="#" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.29-1.39c1.44.79 3.06 1.2 4.7 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.09c-.24.68-1.42 1.32-1.96 1.4-.5.08-1.13.11-1.83-.12-.42-.13-.96-.31-1.66-.6-2.92-1.26-4.83-4.19-4.98-4.39-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.45.27-.29.6-.36.8-.36.2 0 .4 0 .58.01.19.01.44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.54-.15.15-.3.31-.13.61.17.3.75 1.24 1.62 2.01 1.11 1 2.05 1.31 2.35 1.46.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.08.13.08.75-.16 1.43z"/></svg>
+      </a>
+      <button class="icon-btn" id="cartBtn" aria-label="Voir la commande">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><circle cx="9" cy="21" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="21" r="1.4" fill="currentColor" stroke="none"/><path d="M2.5 3h2l2.6 12.4a2 2 0 002 1.6h8.4a2 2 0 002-1.6L21 7H6"/></svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="masthead-nav">
+    <div class="wrap nav-inner">
+      <a href="#accueil" class="nav-link" data-view="accueil">Accueil</a>
+      <a href="#carte" class="nav-link" data-view="carte">La carte</a>
+      <a href="#tutos" class="nav-link" data-view="tutos">Tutos & recettes</a>
+      <a href="#apropos" class="nav-link" data-view="apropos">Service & À propos</a>
+      <a href="#avis" class="nav-link" data-view="avis">Avis</a>
+      <a href="#pro" class="nav-link" data-view="pro">Espace pro</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= ACCUEIL ================= -->
+<main id="view-accueil" class="view">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-badges">
+          <span class="pill-tag" id="heroCityBadge">LYON</span>
+          <span class="pill-tag">LIVRAISON FRANCE ENTIÈRE</span>
+          <span class="pill-tag">FAIT MAISON</span>
+        </div>
+        <h1 id="heroTitle">Les saveurs d'Afrique, cuisinées avec amour</h1>
+        <p class="hero-sub" id="heroSub">Togo, Côte d'Ivoire, Mali, Burkina Faso — et quelques classiques d'Europe. Préparé maison à Lyon, livré partout en France.</p>
+        <div class="hero-cta">
+          <a href="#carte" class="btn btn-primary">Voir la carte</a>
+          <a href="#" id="heroWaBtn" target="_blank" rel="noopener" class="btn btn-outline">Commander sur WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-media" id="heroMedia"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>À la une</h2></div>
+      <div class="feature" id="featureBlock"></div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="wrap">
+      <div class="section-head"><h2>Nos essentiels</h2><a href="#carte">Toute la carte</a></div>
+      <div class="grid grid-3" id="homeDishes"></div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="wrap">
+      <div class="section-head"><h2>Derniers tutos</h2><a href="#tutos">Tous les tutos</a></div>
+      <div class="grid grid-3" id="homeTutos"></div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="wrap">
+      <div class="section-head"><h2>Ils en parlent</h2><a href="#avis">Voir tous les avis</a></div>
+      <div id="homeReviews"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= CARTE ================= -->
+<main id="view-carte" class="view">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>La carte</h2></div>
+      <div class="cat-filters" id="catFilters"></div>
+      <div class="menu-list" id="menuList"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= TUTOS ================= -->
+<main id="view-tutos" class="view">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Tutos & recettes</h2></div>
+      <div id="tutoDetailWrap"></div>
+      <div class="grid grid-3" id="tutoGrid"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= APROPOS ================= -->
+<main id="view-apropos" class="view">
+  <section class="section">
+    <div class="wrap about-grid">
+      <div>
+        <h2>Service & livraison</h2>
+        <p id="aboutText">Clara's Kitchenette prépare, à la commande, des plats togolais, ivoiriens, maliens et burkinabés — avec quelques classiques européens en clin d'œil. Chaque part est cuisinée maison à Lyon puis livrée avec soin partout en France.</p>
+        <div class="faq" id="faqList"></div>
+      </div>
+      <div>
+        <div class="info-block">
+          <h3>Contact & commande</h3>
+          <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span id="infoCity">Lyon — livraison dans toute la France</span></div>
+          <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.7 2z"/></svg><span id="infoPhone">06 77 94 91 39</span></div>
+          <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a3 3 0 106 0 3 3 0 00-6 0z"/><path d="M17.5 6.5a5 5 0 010 7"/></svg><span>TikTok : <span id="infoTiktok">@claras.kitchenette</span></span></div>
+          <a href="#" id="aboutWaBtn" target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-block mt-sm">Écrire sur WhatsApp</a>
+        </div>
+        <div class="info-block">
+          <h3>Bon à savoir</h3>
+          <p class="text-note">Les commandes sont confirmées par WhatsApp (créneau, adresse, paiement). Un plat contient ou peut contenir des arachides, du gluten ou des fruits de mer selon la recette — n'hésite pas à demander le détail d'un plat avant de commander si tu as une allergie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= AVIS ================= -->
+<main id="view-avis" class="view">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Avis clients</h2></div>
+      <div class="rating-summary" id="ratingSummary"></div>
+      <div class="review-form">
+        <h3 class="h-sm">Laisser un avis</h3>
+        <form id="reviewForm">
+          <div class="field"><label for="rvName">Ton prénom</label><input id="rvName" required maxlength="40"></div>
+          <label class="field-label">Ta note</label>
+          <div class="star-picker" id="starPicker"></div>
+          <div class="field"><label for="rvComment">Ton avis</label><textarea id="rvComment" required maxlength="400" placeholder="Qu'as-tu pensé de ta commande ?"></textarea></div>
+          <button class="btn btn-primary" type="submit">Publier mon avis</button>
+        </form>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= ESPACE PRO ================= -->
+<main id="view-pro" class="view">
+  <section class="section">
+    <div class="wrap">
+      <div id="adminLockWrap"></div>
+      <div id="adminAreaWrap" hidden>
+        <div class="section-head"><h2>Espace pro</h2><button class="btn btn-outline btn-sm" id="adminLogoutBtn">Se déconnecter</button></div>
+        <p class="admin-note">Cet espace te permet d'ajouter tes plats, tes tutos et de gérer les avis — sans toucher au code. Les changements sont visibles immédiatement par tes visiteurs.</p>
+        <div class="admin-tabs" id="adminTabs">
+          <button class="admin-tab-btn active" data-tab="plats">Plats</button>
+          <button class="admin-tab-btn" data-tab="tutos">Tutos</button>
+          <button class="admin-tab-btn" data-tab="avis">Avis</button>
+          <button class="admin-tab-btn" data-tab="reglages">Réglages</button>
+        </div>
+
+        <div class="admin-panel active" id="panel-plats">
+          <div class="admin-form">
+            <h4 id="dishFormTitle">Ajouter un plat</h4>
+            <form id="dishForm">
+              <input type="hidden" id="dishId">
+              <div class="form-grid">
+                <div class="field"><label for="dishName">Nom du plat</label><input id="dishName" required></div>
+                <div class="field"><label for="dishCat">Catégorie</label>
+                  <select id="dishCat"><option>Plats</option><option>Accompagnements</option><option>Boissons</option><option>Desserts</option></select>
+                </div>
+                <div class="field"><label for="dishPrice">Prix (€)</label><input id="dishPrice" type="number" step="0.5" min="0" required></div>
+                <div class="field"><label for="dishPhoto">Lien photo (URL Google Drive ou autre)</label><input id="dishPhoto" placeholder="https://..."></div>
+                <div class="field field-full"><label for="dishDesc">Description</label><textarea id="dishDesc" maxlength="200"></textarea></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary btn-sm" type="submit">Enregistrer le plat</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="dishFormCancel" hidden>Annuler la modification</button>
+              </div>
+            </form>
+          </div>
+          <div id="dishAdminList"></div>
+        </div>
+
+        <div class="admin-panel" id="panel-tutos">
+          <div class="admin-form">
+            <h4 id="tutoFormTitle">Ajouter un tuto</h4>
+            <form id="tutoForm">
+              <input type="hidden" id="tutoId">
+              <div class="form-grid">
+                <div class="field field-full"><label for="tutoTitle">Titre</label><input id="tutoTitle" required></div>
+                <div class="field"><label for="tutoPhoto">Lien photo (URL)</label><input id="tutoPhoto" placeholder="https://..."></div>
+                <div class="field"><label for="tutoVideo">Lien vidéo (YouTube ou TikTok)</label><input id="tutoVideo" placeholder="https://..."></div>
+                <div class="field field-full"><label for="tutoSummary">Résumé court</label><input id="tutoSummary" maxlength="140"></div>
+                <div class="field field-full"><label for="tutoIngredients">Ingrédients (un par ligne)</label><textarea id="tutoIngredients" placeholder="200g de riz&#10;1 oignon&#10;..."></textarea></div>
+                <div class="field field-full"><label for="tutoSteps">Étapes (une par ligne)</label><textarea id="tutoSteps" placeholder="Faire chauffer l'huile...&#10;Ajouter l'oignon..."></textarea></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary btn-sm" type="submit">Enregistrer le tuto</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="tutoFormCancel" hidden>Annuler la modification</button>
+              </div>
+            </form>
+          </div>
+          <div id="tutoAdminList"></div>
+        </div>
+
+        <div class="admin-panel" id="panel-avis">
+          <p class="admin-note">Supprime les avis qui ne devraient pas rester en ligne (spam, contenu inapproprié).</p>
+          <div id="reviewAdminList"></div>
+        </div>
+
+        <div class="admin-panel" id="panel-reglages">
+          <div class="admin-form">
+            <h4>Réglages du site</h4>
+            <form id="settingsForm">
+              <div class="form-grid">
+                <div class="field"><label for="setWhatsapp">Numéro WhatsApp (format international, sans +)</label><input id="setWhatsapp" placeholder="33677949139" required></div>
+                <div class="field"><label for="setVille">Ville</label><input id="setVille" required></div>
+                <div class="field"><label for="setTiktok">Identifiant TikTok</label><input id="setTiktok" placeholder="@claras.kitchenette"></div>
+                <div class="field field-full"><label for="setHeroTitle">Titre d'accueil</label><input id="setHeroTitle"></div>
+                <div class="field field-full"><label for="setHeroSub">Sous-titre d'accueil</label><input id="setHeroSub"></div>
+                <div class="field field-full"><label for="setHeroPhoto">Photo/illustration d'accueil (URL)</label><input id="setHeroPhoto" placeholder="https://..."></div>
+                <div class="field field-full"><label for="setAbout">Texte « Service & À propos »</label><textarea id="setAbout"></textarea></div>
+              </div>
+              <button class="btn btn-primary btn-sm mt-sm" type="submit">Enregistrer les réglages</button>
+            </form>
+          </div>
+          <div class="admin-note">Pense à compléter tes mentions légales (SIRET, adresse de l'établissement si tu en as une) avant l'ouverture publique du site — elles ne sont pas générées automatiquement ici.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Panier de commande">
+  <div class="cart-head"><h3>Ta commande</h3><button class="icon-btn" id="cartCloseBtn" aria-label="Fermer">✕</button></div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot" hidden>
+    <div class="cart-total"><span>Total estimé</span><span id="cartTotal">0,00 €</span></div>
+    <div class="field"><label for="custName">Ton nom</label><input id="custName"></div>
+    <div class="field"><label for="custAddress">Adresse de livraison</label><input id="custAddress"></div>
+    <div class="field"><label for="custDate">Date souhaitée</label><input id="custDate" type="date"></div>
+    <button class="btn btn-primary btn-block" id="sendOrderBtn">Commander sur WhatsApp</button>
+  </div>
+</aside>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <h4>Clara's Kitchenette</h4>
+      <p class="foot-desc">Cuisine togolaise, ivoirienne, malienne et burkinabée faite maison à Lyon, livrée partout en France.</p>
+    </div>
+    <div class="foot-links"><h4>Navigation</h4>
+      <a href="#carte">La carte</a><a href="#tutos">Tutos & recettes</a><a href="#apropos">Service & livraison</a><a href="#avis">Avis</a>
+    </div>
+    <div class="foot-links"><h4>Nous suivre</h4>
+      <a href="#" id="footTiktok" target="_blank" rel="noopener">TikTok</a>
+      <a href="#" id="footWa" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© <span id="year"></span> Clara's Kitchenette — Lyon, France</span>
+    <span>Site créé avec Claude</span>
+  </div>
+</footer>
+
+<a class="wa-float" id="waFloatBtn" href="#" target="_blank" rel="noopener" aria-label="Commander sur WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.29-1.39c1.44.79 3.06 1.2 4.7 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.09c-.24.68-1.42 1.32-1.96 1.4-.5.08-1.13.11-1.83-.12-.42-.13-.96-.31-1.66-.6-2.92-1.26-4.83-4.19-4.98-4.39-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.45.27-.29.6-.36.8-.36.2 0 .4 0 .58.01.19.01.44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.54-.15.15-.3.31-.13.61.17.3.75 1.24 1.62 2.01 1.11 1 2.05 1.31 2.35 1.46.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.08.13.08.75-.16 1.43z"/></svg>
+</a>
+<div class="toast" id="toast"></div>
+
+<!-- Le JS est séparé en 2 fichiers : api.js (communication avec le serveur) et app.js (le reste) -->
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
