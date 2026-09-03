@@ -191,6 +191,15 @@ logo — si tu le changes, dis-le-moi et je régénère aussi le favicon assorti
 
 ## 8. Une photo ne s'affiche pas / ne se met pas à jour : comment vérifier
 
+**Mise à jour : un vrai bug d'affichage a été corrigé dans cette version.** Les photos pouvaient être bien
+enregistrées dans la base de données, mais rester invisibles à l'écran à cause d'une règle CSS (le calcul
+de hauteur des images dans certains blocs ne se faisait pas de façon fiable dans tous les navigateurs).
+C'est corrigé dans `public/css/style.css` — renvoie simplement ce fichier sur GitHub pour que Render le
+redéploie, et les photos déjà enregistrées devraient apparaître immédiatement, sans avoir besoin de les
+ré-ajouter.
+
+Si un souci persiste malgré tout, voici comment vérifier :
+
 **D'abord, un point important sur les rôles de chaque outil**, car c'est une confusion fréquente :
 
 - **GitHub** héberge uniquement le **code** de ton site (les fichiers de ce projet). Il ne reçoit jamais
