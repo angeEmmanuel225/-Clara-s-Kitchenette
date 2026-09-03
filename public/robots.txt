@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clara-kitchenette.onrender.com/sitemap.xml
+Sitemap: https://clara-s-kitchenette.onrender.com/sitemap.xml
