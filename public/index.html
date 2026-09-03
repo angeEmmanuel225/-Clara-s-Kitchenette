@@ -215,7 +215,22 @@
                   <select id="dishCat"><option>Plats</option><option>Accompagnements</option><option>Boissons</option><option>Desserts</option></select>
                 </div>
                 <div class="field"><label for="dishPrice">Prix (€)</label><input id="dishPrice" type="number" step="0.5" min="0" required></div>
-                <div class="field"><label for="dishPhoto">Lien photo (URL Google Drive ou autre)</label><input id="dishPhoto" placeholder="https://..."></div>
+                <div class="field field-full">
+                  <label>Photo du plat</label>
+                  <div class="photo-picker">
+                    <div class="photo-preview empty" id="dishPhotoPreview"></div>
+                    <div class="photo-picker-main">
+                      <div class="photo-picker-row">
+                        <label class="btn btn-outline btn-sm file-btn">Choisir une photo
+                          <input type="file" accept="image/*" id="dishPhotoFile" hidden>
+                        </label>
+                        <button type="button" class="link-btn" id="dishPhotoClear" hidden>Retirer</button>
+                      </div>
+                      <span class="photo-status" id="dishPhotoStatus"></span>
+                      <input id="dishPhoto" class="url-fallback" placeholder="ou coller un lien (URL) — ex. Google Drive">
+                    </div>
+                  </div>
+                </div>
                 <div class="field field-full"><label for="dishDesc">Description</label><textarea id="dishDesc" maxlength="200"></textarea></div>
               </div>
               <div class="form-actions">
@@ -234,8 +249,23 @@
               <input type="hidden" id="tutoId">
               <div class="form-grid">
                 <div class="field field-full"><label for="tutoTitle">Titre</label><input id="tutoTitle" required></div>
-                <div class="field"><label for="tutoPhoto">Lien photo (URL)</label><input id="tutoPhoto" placeholder="https://..."></div>
-                <div class="field"><label for="tutoVideo">Lien vidéo (YouTube ou TikTok)</label><input id="tutoVideo" placeholder="https://..."></div>
+                <div class="field field-full">
+                  <label>Photo de couverture (avant d'ajouter le lien vidéo)</label>
+                  <div class="photo-picker">
+                    <div class="photo-preview empty" id="tutoPhotoPreview"></div>
+                    <div class="photo-picker-main">
+                      <div class="photo-picker-row">
+                        <label class="btn btn-outline btn-sm file-btn">Choisir une photo
+                          <input type="file" accept="image/*" id="tutoPhotoFile" hidden>
+                        </label>
+                        <button type="button" class="link-btn" id="tutoPhotoClear" hidden>Retirer</button>
+                      </div>
+                      <span class="photo-status" id="tutoPhotoStatus"></span>
+                      <input id="tutoPhoto" class="url-fallback" placeholder="ou coller un lien (URL) — ex. Google Drive">
+                    </div>
+                  </div>
+                </div>
+                <div class="field field-full"><label for="tutoVideo">Lien vidéo (YouTube ou TikTok)</label><input id="tutoVideo" placeholder="https://..."></div>
                 <div class="field field-full"><label for="tutoSummary">Résumé court</label><input id="tutoSummary" maxlength="140"></div>
                 <div class="field field-full"><label for="tutoIngredients">Ingrédients (un par ligne)</label><textarea id="tutoIngredients" placeholder="200g de riz&#10;1 oignon&#10;..."></textarea></div>
                 <div class="field field-full"><label for="tutoSteps">Étapes (une par ligne)</label><textarea id="tutoSteps" placeholder="Faire chauffer l'huile...&#10;Ajouter l'oignon..."></textarea></div>
@@ -264,7 +294,22 @@
                 <div class="field"><label for="setTiktok">Identifiant TikTok</label><input id="setTiktok" placeholder="@claras.kitchenette"></div>
                 <div class="field field-full"><label for="setHeroTitle">Titre d'accueil</label><input id="setHeroTitle"></div>
                 <div class="field field-full"><label for="setHeroSub">Sous-titre d'accueil</label><input id="setHeroSub"></div>
-                <div class="field field-full"><label for="setHeroPhoto">Photo/illustration d'accueil (URL)</label><input id="setHeroPhoto" placeholder="https://..."></div>
+                <div class="field field-full">
+                  <label>Photo/illustration d'accueil</label>
+                  <div class="photo-picker">
+                    <div class="photo-preview empty" id="setHeroPhotoPreview"></div>
+                    <div class="photo-picker-main">
+                      <div class="photo-picker-row">
+                        <label class="btn btn-outline btn-sm file-btn">Choisir une photo
+                          <input type="file" accept="image/*" id="setHeroPhotoFile" hidden>
+                        </label>
+                        <button type="button" class="link-btn" id="setHeroPhotoClear" hidden>Retirer</button>
+                      </div>
+                      <span class="photo-status" id="setHeroPhotoStatus"></span>
+                      <input id="setHeroPhoto" class="url-fallback" placeholder="ou coller un lien (URL) — ex. Google Drive">
+                    </div>
+                  </div>
+                </div>
                 <div class="field field-full"><label for="setAbout">Texte « Service & À propos »</label><textarea id="setAbout"></textarea></div>
               </div>
               <button class="btn btn-primary btn-sm mt-sm" type="submit">Enregistrer les réglages</button>
@@ -319,6 +364,7 @@
 
 <!-- Le JS est séparé en 2 fichiers : api.js (communication avec le serveur) et app.js (le reste) -->
 <script src="/js/api.js"></script>
+<script src="/js/upload.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

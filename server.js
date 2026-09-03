@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(cors()); // autorise les appels depuis n'importe quelle origine (utile en développement local)
-app.use(express.json({ limit: "1mb" })); // les photos sont des liens (URL), pas des fichiers : pas besoin de plus
+// Les photos envoyées depuis le téléphone/ordinateur sont compressées côté navigateur
+// (~550 Ko max) puis encodées en base64 avant d'être stockées comme un texte dans MongoDB.
+// La limite ci-dessous laisse une marge confortable tout en protégeant le serveur gratuit.
+app.use(express.json({ limit: "3mb" }));
 
 // Fichiers du site (HTML / CSS / JS) — servis tels quels
 app.use(express.static(path.join(__dirname, "public")));

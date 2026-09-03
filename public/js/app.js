@@ -348,6 +348,20 @@ document.getElementById("faqList").addEventListener("click", function(e){
   q.parentElement.classList.toggle("open");
 });
 
+/* ============ SÉLECTEURS DE PHOTO (upload + compression) ============ */
+var dishPhotoPicker = Upload.wirePicker({
+  fileInputId:"dishPhotoFile", urlInputId:"dishPhoto", previewId:"dishPhotoPreview",
+  statusId:"dishPhotoStatus", clearBtnId:"dishPhotoClear"
+});
+var tutoPhotoPicker = Upload.wirePicker({
+  fileInputId:"tutoPhotoFile", urlInputId:"tutoPhoto", previewId:"tutoPhotoPreview",
+  statusId:"tutoPhotoStatus", clearBtnId:"tutoPhotoClear"
+});
+var heroPhotoPicker = Upload.wirePicker({
+  fileInputId:"setHeroPhotoFile", urlInputId:"setHeroPhoto", previewId:"setHeroPhotoPreview",
+  statusId:"setHeroPhotoStatus", clearBtnId:"setHeroPhotoClear"
+});
+
 /* ============ ESPACE PRO ============ */
 function renderAdmin(){
   var lockWrap = document.getElementById("adminLockWrap");
@@ -411,6 +425,7 @@ function fillSettingsForm(){
   document.getElementById("setHeroSub").value = STATE.settings.heroSub||"";
   document.getElementById("setHeroPhoto").value = STATE.settings.heroPhoto||"";
   document.getElementById("setAbout").value = STATE.settings.about||"";
+  heroPhotoPicker.refresh();
 }
 
 /* -- formulaire plat -- */
@@ -431,6 +446,7 @@ document.getElementById("dishForm").addEventListener("submit", function(e){
       document.getElementById("dishForm").reset(); document.getElementById("dishId").value="";
       document.getElementById("dishFormTitle").textContent = "Ajouter un plat";
       document.getElementById("dishFormCancel").hidden = true;
+      dishPhotoPicker.refresh();
       renderDishAdminList(); renderCarte(); renderAccueil();
       showToast("Plat enregistré.");
     });
@@ -439,6 +455,7 @@ document.getElementById("dishForm").addEventListener("submit", function(e){
 document.getElementById("dishFormCancel").addEventListener("click", function(){
   document.getElementById("dishForm").reset(); document.getElementById("dishId").value="";
   document.getElementById("dishFormTitle").textContent = "Ajouter un plat";
+  dishPhotoPicker.refresh();
   this.hidden = true;
 });
 document.getElementById("dishAdminList").addEventListener("click", function(e){
@@ -449,6 +466,7 @@ document.getElementById("dishAdminList").addEventListener("click", function(e){
     document.getElementById("dishId").value=d.id; document.getElementById("dishName").value=d.name;
     document.getElementById("dishCat").value=d.category; document.getElementById("dishPrice").value=d.price;
     document.getElementById("dishPhoto").value=d.photo||""; document.getElementById("dishDesc").value=d.desc||"";
+    dishPhotoPicker.refresh();
     document.getElementById("dishFormTitle").textContent = "Modifier « "+d.name+" »";
     document.getElementById("dishFormCancel").hidden = false;
     document.getElementById("dishForm").scrollIntoView({behavior:"smooth"});
@@ -481,6 +499,7 @@ document.getElementById("tutoForm").addEventListener("submit", function(e){
       document.getElementById("tutoForm").reset(); document.getElementById("tutoId").value="";
       document.getElementById("tutoFormTitle").textContent = "Ajouter un tuto";
       document.getElementById("tutoFormCancel").hidden = true;
+      tutoPhotoPicker.refresh();
       renderTutoAdminList(); renderTutos(); renderAccueil();
       showToast("Tuto enregistré.");
     });
@@ -489,6 +508,7 @@ document.getElementById("tutoForm").addEventListener("submit", function(e){
 document.getElementById("tutoFormCancel").addEventListener("click", function(){
   document.getElementById("tutoForm").reset(); document.getElementById("tutoId").value="";
   document.getElementById("tutoFormTitle").textContent = "Ajouter un tuto";
+  tutoPhotoPicker.refresh();
   this.hidden = true;
 });
 document.getElementById("tutoAdminList").addEventListener("click", function(e){
@@ -500,6 +520,7 @@ document.getElementById("tutoAdminList").addEventListener("click", function(e){
     document.getElementById("tutoPhoto").value=t.photo||""; document.getElementById("tutoVideo").value=t.video||"";
     document.getElementById("tutoSummary").value=t.summary||""; document.getElementById("tutoIngredients").value=t.ingredients||"";
     document.getElementById("tutoSteps").value=t.steps||"";
+    tutoPhotoPicker.refresh();
     document.getElementById("tutoFormTitle").textContent = "Modifier « "+t.title+" »";
     document.getElementById("tutoFormCancel").hidden = false;
     document.getElementById("tutoForm").scrollIntoView({behavior:"smooth"});

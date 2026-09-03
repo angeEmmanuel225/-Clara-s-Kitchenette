@@ -40,6 +40,7 @@ clara-kitchenette/
     │   └── style.css           → toute l'apparence (couleurs, typographie, mise en page)
     └── js/
         ├── api.js               → tout ce qui communique avec le serveur
+        ├── upload.js             → choisir une photo sur le téléphone/ordinateur et la compresser
         └── app.js                → tout ce qui gère l'affichage et les clics
 ```
 
@@ -126,27 +127,44 @@ mais ça couvre la grande majorité des cas.)*
 
 ---
 
-## 6. Étape 5 — Ajouter des photos avec Google Drive
+## 6. Étape 5 — Ajouter des photos (plats et couvertures de tutos)
 
-Le site n'a pas de bouton "envoyer un fichier" : à la place, tu colles un **lien** vers ta photo dans
-l'espace pro. Voici comment obtenir un lien Google Drive qui fonctionne comme une image :
+### Méthode 1 — Depuis ton téléphone ou ton ordinateur (recommandée)
+
+Dans l'espace pro, chaque plat et chaque tuto a un bouton **"Choisir une photo"**. En cliquant dessus :
+
+1. Ton appareil ouvre son sélecteur de fichiers habituel (galerie photo, appareil photo, dossiers...).
+2. Une fois la photo choisie, elle est automatiquement **redimensionnée et compressée dans le navigateur**
+   (avant même d'être envoyée) : maximum 1280 pixels de côté, qualité ajustée pour viser environ **550 Ko
+   ou moins**. Un message affiche le résultat, par exemple *"Photo prête (210 Ko, 1280×960 px)"*.
+3. Un aperçu apparaît immédiatement à gauche du bouton. Le bouton **"Retirer"** permet d'enlever la photo.
+4. Il ne reste qu'à cliquer sur **"Enregistrer"** en bas du formulaire.
+
+La photo est stockée directement dans MongoDB (pas besoin de Google Drive ni d'un autre service). Avec les
+512 Mo offerts par le plan gratuit MongoDB Atlas, et des photos compressées à ~550 Ko maximum, tu as de la
+place pour plusieurs centaines de photos — largement de quoi couvrir toute ta carte et tous tes tutos.
+
+### Méthode 2 — Coller un lien (utile pour une photo déjà hébergée ailleurs)
+
+Sous le bouton "Choisir une photo", un petit champ texte reste disponible pour coller un lien direct. Si tu
+préfères passer par Google Drive :
 
 1. Dépose ta photo dans Google Drive.
 2. Clic droit sur le fichier → **Partager** → change l'accès en **"Tous les utilisateurs disposant du lien"**.
 3. Copie le lien, il ressemble à : `https://drive.google.com/file/d/1AbCdEfGhIjKlMnOp/view?usp=sharing`
 4. Repère la partie entre `/d/` et `/view` — ici `1AbCdEfGhIjKlMnOp` — c'est l'identifiant du fichier.
 5. Construis ce lien à la place : `https://drive.google.com/uc?export=view&id=1AbCdEfGhIjKlMnOp`
-6. Colle **ce nouveau lien** (pas l'original) dans le champ "Lien photo" de l'espace pro.
+6. Colle **ce nouveau lien** dans le petit champ texte (pas besoin de passer par "Choisir une photo").
 
-**Limite à connaître :** ce n'est pas un service d'hébergement d'images officiel — Google peut, rarement,
-bloquer temporairement l'affichage si une image est vue un très grand nombre de fois dans la journée. Pour
-une activité qui démarre, ça fonctionne bien. Si ça devient un problème plus tard, on pourra basculer vers
-un hébergeur d'images dédié (ex. Cloudinary, également gratuit) sans rien changer au reste du site — juste
-le lien collé change.
+*(Limite à connaître avec cette méthode : Google peut, rarement, bloquer temporairement l'affichage si une
+image est vue un très grand nombre de fois dans la journée — la Méthode 1 n'a pas cette limite puisque
+l'image est servie directement par ton propre serveur.)*
 
-**Pour les vidéos :** rien à convertir — colle simplement le lien YouTube ou TikTok tel quel dans le champ
-"Lien vidéo". Un lien YouTube s'affiche directement dans la page ; un lien TikTok affiche un bouton "Voir
-la vidéo" qui ouvre TikTok.
+### Pour les vidéos (tutos)
+
+Rien à compresser ni convertir : colle simplement le lien YouTube ou TikTok tel quel dans le champ "Lien
+vidéo", juste en dessous de la photo de couverture. Un lien YouTube s'affiche directement dans la page ;
+un lien TikTok affiche un bouton "Voir la vidéo" qui ouvre TikTok.
 
 ---
 
@@ -183,8 +201,11 @@ Puis ouvre `http://localhost:3000` dans ton navigateur.
 - **Sécurité de l'espace pro :** le mot de passe est vérifié par le serveur (donc plus solide qu'un simple
   code caché dans une page web), mais il n'y a pas de compte utilisateur individuel ni de limite de
   tentatives. Largement suffisant pour démarrer ; à renforcer si l'activité grandit beaucoup.
-- **MongoDB Atlas gratuit :** 512 Mo de stockage — largement de quoi stocker des centaines de plats, tutos
-  et avis (les photos ne sont que des liens, donc elles ne prennent pas de place ici).
+- **MongoDB Atlas gratuit :** 512 Mo de stockage. Le texte (plats, tutos, avis, réglages) prend une place
+  négligeable ; ce sont les photos envoyées depuis l'espace pro qui comptent le plus, mais comme elles sont
+  compressées à ~550 Ko maximum avant l'envoi, cela laisse de la place pour plusieurs centaines de photos.
+  Si tu approches un jour de la limite, MongoDB Atlas affiche une alerte dans son tableau de bord bien avant
+  que ce soit critique.
 - **Render gratuit :** le service s'endort sans visite ; UptimeRobot limite le problème mais ne l'élimine
   pas à 100 %.
 
