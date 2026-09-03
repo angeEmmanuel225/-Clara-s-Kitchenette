@@ -349,18 +349,28 @@ document.getElementById("faqList").addEventListener("click", function(e){
 });
 
 /* ============ SÉLECTEURS DE PHOTO (upload + compression) ============ */
-var dishPhotoPicker = Upload.wirePicker({
-  fileInputId:"dishPhotoFile", urlInputId:"dishPhoto", previewId:"dishPhotoPreview",
-  statusId:"dishPhotoStatus", clearBtnId:"dishPhotoClear"
-});
-var tutoPhotoPicker = Upload.wirePicker({
-  fileInputId:"tutoPhotoFile", urlInputId:"tutoPhoto", previewId:"tutoPhotoPreview",
-  statusId:"tutoPhotoStatus", clearBtnId:"tutoPhotoClear"
-});
-var heroPhotoPicker = Upload.wirePicker({
-  fileInputId:"setHeroPhotoFile", urlInputId:"setHeroPhoto", previewId:"setHeroPhotoPreview",
-  statusId:"setHeroPhotoStatus", clearBtnId:"setHeroPhotoClear"
-});
+// Protégé par un try/catch : si un jour un de ces éléments manque ou qu'une
+// erreur survient ici, le reste du site (formulaires, panier, avis...)
+// continue quand même à fonctionner normalement au lieu de tout bloquer.
+var dishPhotoPicker = { refresh: function(){} };
+var tutoPhotoPicker = { refresh: function(){} };
+var heroPhotoPicker = { refresh: function(){} };
+try {
+  dishPhotoPicker = Upload.wirePicker({
+    fileInputId:"dishPhotoFile", urlInputId:"dishPhoto", previewId:"dishPhotoPreview",
+    statusId:"dishPhotoStatus", clearBtnId:"dishPhotoClear"
+  });
+  tutoPhotoPicker = Upload.wirePicker({
+    fileInputId:"tutoPhotoFile", urlInputId:"tutoPhoto", previewId:"tutoPhotoPreview",
+    statusId:"tutoPhotoStatus", clearBtnId:"tutoPhotoClear"
+  });
+  heroPhotoPicker = Upload.wirePicker({
+    fileInputId:"setHeroPhotoFile", urlInputId:"setHeroPhoto", previewId:"setHeroPhotoPreview",
+    statusId:"setHeroPhotoStatus", clearBtnId:"setHeroPhotoClear"
+  });
+} catch (err) {
+  console.error("Erreur d'initialisation des sélecteurs de photo :", err);
+}
 
 /* ============ ESPACE PRO ============ */
 function renderAdmin(){

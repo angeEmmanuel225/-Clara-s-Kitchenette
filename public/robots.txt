@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clara-kitchenette.onrender.com/sitemap.xml

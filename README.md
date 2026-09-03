@@ -36,6 +36,9 @@ clara-kitchenette/
 │   └── seed.js
 └── public/                    → le site que voient tes visiteurs
     ├── index.html              → la structure des pages
+    ├── favicon.ico              → la petite icône affichée dans l'onglet du navigateur
+    ├── robots.txt               → autorise Google à explorer le site (SEO)
+    ├── sitemap.xml              → liste des pages à indexer, pour Google (SEO)
     ├── css/
     │   └── style.css           → toute l'apparence (couleurs, typographie, mise en page)
     └── js/
@@ -168,7 +171,102 @@ un lien TikTok affiche un bouton "Voir la vidéo" qui ouvre TikTok.
 
 ---
 
-## 7. Tester sur ton ordinateur avant de mettre en ligne (facultatif)
+## 7. Changer le logo
+
+Le logo affiché en haut du site (à côté de "Clara's Kitchenette") est un petit dessin vectoriel (SVG) écrit
+directement dans `public/index.html`, vers la ligne 53 — cherche `class="brand"` dans le fichier. Je l'ai
+mis à jour dans cette version pour utiliser ton vrai monogramme (le cercle doré avec la fleur d'hibiscus et
+"CK"), assorti à ta charte graphique.
+
+**Pour le changer à nouveau plus tard, deux façons :**
+
+- **Utiliser une image à toi** (un logo que tu as fait dessiner, par exemple) : dépose le fichier dans
+  `public/img/logo.png`, puis remplace tout le bloc `<svg>...</svg>` par :
+  `<img src="/img/logo.png" alt="Clara's Kitchenette" width="42" height="42">`
+- **Me redonner le fichier `.svg` de ton logo** (ou me décrire ce que tu veux) et je te prépare la version
+  finale, à coller au même endroit.
+
+Le favicon (petite icône dans l'onglet du navigateur, fichier `public/favicon.ico`) est basé sur ce même
+logo — si tu le changes, dis-le-moi et je régénère aussi le favicon assorti.
+
+## 8. Une photo ne s'affiche pas / ne se met pas à jour : comment vérifier
+
+**D'abord, un point important sur les rôles de chaque outil**, car c'est une confusion fréquente :
+
+- **GitHub** héberge uniquement le **code** de ton site (les fichiers de ce projet). Il ne reçoit jamais
+  les photos ajoutées depuis l'espace pro.
+- **MongoDB Atlas** héberge le **contenu** : tes plats, tutos, avis, réglages — **et les photos elles-mêmes**
+  quand tu utilises le bouton "Choisir une photo" (elles y sont stockées directement, compressées).
+- Tu n'as donc jamais besoin de toucher à GitHub pour ajouter ou changer une photo — seul l'espace pro
+  (`/#pro`) du site suffit. GitHub ne sert qu'à mettre à jour le *code* si un jour je te fournis une nouvelle
+  version des fichiers.
+
+**Si une photo ajoutée depuis l'espace pro ne semble pas apparaître, vérifie dans cet ordre :**
+
+1. **Le message de confirmation.** Juste après avoir choisi la photo, un texte doit apparaître sous le
+   bouton : *"Photo prête (xxx Ko, ...)"*. S'il n'apparaît jamais, la compression a échoué — regarde l'étape 4.
+2. **Le bouton "Enregistrer".** As-tu bien cliqué sur "Enregistrer le plat" / "Enregistrer le tuto" en bas du
+   formulaire après avoir choisi la photo ? Choisir une photo ne suffit pas, il faut ensuite valider le formulaire.
+3. **Le message après l'enregistrement.** Un petit message doit apparaître en bas de l'écran : soit
+   *"Plat enregistré."* (succès), soit un message d'erreur. S'il indique une erreur, note exactement ce
+   qu'il dit.
+4. **La console du navigateur (pour une vérification plus poussée).** Fais un clic droit sur la page → **Inspecter**
+   → onglet **Console**. Recommence l'ajout de la photo : si une ligne apparaît en rouge, elle m'aidera
+   à identifier précisément le problème — copie-la moi.
+5. **As-tu bien mis en ligne la dernière version du code ?** La fonction "Choisir une photo" fait partie
+   d'une mise à jour récente. Vérifie que le fichier `public/js/upload.js` existe bien dans ton dépôt GitHub
+   — s'il n'y est pas, c'est que cette version n'a pas encore été envoyée/déployée.
+6. **Recharge la page.** Après un enregistrement réussi, la page qui a servi à l'ajouter se met à jour toute
+   seule. Mais si tu regardais le site depuis un **autre onglet ou un autre appareil** déjà ouvert avant
+   l'ajout, il faut le recharger (F5) pour qu'il aille chercher les nouvelles données.
+
+Si après ces vérifications ça ne fonctionne toujours pas, dis-moi à quelle étape ça coince (et le message
+d'erreur exact s'il y en a un) — je pourrai cibler la correction.
+
+## 9. Faire apparaître ton site sur Google, gratuitement
+
+Deux leviers gratuits, à faire tous les deux :
+
+### A. Google Search Console (indexation technique)
+
+1. Va sur [search.google.com/search-console](https://search.google.com/search-console) et connecte-toi avec
+   un compte Google.
+2. **Ajouter une propriété** → choisis **"Préfixe d'URL"** → colle l'adresse de ton site
+   (ex. `https://clara-kitchenette.onrender.com/`).
+3. Pour la vérification, choisis la méthode **"Balise HTML"**. Google t'affiche une ligne du type :
+   `<meta name="google-site-verification" content="abcdef123..." />`
+4. Ouvre `public/index.html`, repère ce commentaire près du haut du fichier :
+   ```html
+   <!-- <meta name="google-site-verification" content="COLLE-TON-CODE-ICI" /> -->
+   ```
+   Remplace cette ligne par la vraie balise que Google t'a donnée (enlève les `<!--` et `-->`).
+5. Renvoie le fichier modifié sur GitHub (Render redéploie automatiquement).
+6. Reviens sur Search Console et clique **Vérifier**.
+7. Une fois vérifié, va dans **Sitemaps** (menu de gauche) → soumets `sitemap.xml`
+   (déjà présent dans le projet, à l'adresse `https://TON-SITE.onrender.com/sitemap.xml` — pense à corriger
+   l'adresse à l'intérieur de `sitemap.xml`, de `robots.txt`, et de la balise `<link rel="canonical">` tout
+   en haut de `index.html`, avec ta vraie adresse Render une fois déployé).
+8. Va dans **Inspection de l'URL**, colle l'adresse de ton site, clique **Demander une indexation**. Cela
+   accélère la première prise en compte par Google (au lieu d'attendre qu'il passe tout seul).
+
+*(Le site étant une page unique qui charge son contenu dynamiquement, Google sait généralement bien
+l'analyser aujourd'hui, mais l'indexation peut prendre un peu plus de temps qu'un site classique. Ce n'est
+pas bloquant, juste un peu moins immédiat.)*
+
+### B. Google Business Profile (le plus important pour être trouvée localement)
+
+Pour une activité comme la tienne, ce levier compte souvent plus que le site lui-même dans les recherches
+du type "traiteur africain Lyon" :
+
+1. Va sur [google.com/business](https://www.google.com/business/) → **Gérer maintenant**.
+2. Crée ta fiche : nom "Clara's Kitchenette", catégorie "Traiteur" ou "Restaurant africain", zone de
+   livraison (Lyon + France), horaires, numéro de téléphone, lien vers ton site Render.
+3. Ajoute des photos de tes plats (les mêmes que celles de ton site, par exemple).
+4. Valide la fiche (Google envoie un code par courrier, SMS ou appel selon les cas).
+5. Une fois validée, demande à tes premiers clients satisfaits d'y laisser un avis Google — c'est ce qui
+   pèse le plus dans le classement local.
+
+## 10. Tester sur ton ordinateur avant de mettre en ligne (facultatif)
 
 Si tu as [Node.js](https://nodejs.org) installé :
 
@@ -184,7 +282,7 @@ Puis ouvre `http://localhost:3000` dans ton navigateur.
 
 ---
 
-## 8. Après la mise en ligne
+## 11. Après la mise en ligne
 
 - **Changer le mot de passe de l'espace pro** : va dans Render → ton service → **Environment** → modifie
   `ADMIN_PASSCODE` → **Save Changes** (le service redémarre tout seul).
@@ -196,7 +294,7 @@ Puis ouvre `http://localhost:3000` dans ton navigateur.
 
 ---
 
-## 9. Bon à savoir sur les limites de cette version gratuite
+## 12. Bon à savoir sur les limites de cette version gratuite
 
 - **Sécurité de l'espace pro :** le mot de passe est vérifié par le serveur (donc plus solide qu'un simple
   code caché dans une page web), mais il n'y a pas de compte utilisateur individuel ni de limite de
