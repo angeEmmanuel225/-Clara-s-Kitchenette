@@ -213,6 +213,7 @@
           <button class="admin-tab-btn active" data-tab="plats">Plats</button>
           <button class="admin-tab-btn" data-tab="tutos">Tutos</button>
           <button class="admin-tab-btn" data-tab="avis">Avis</button>
+          <button class="admin-tab-btn" data-tab="promo">Codes promo</button>
           <button class="admin-tab-btn" data-tab="reglages">Réglages</button>
         </div>
 
@@ -296,6 +297,21 @@
           <div id="reviewAdminList"></div>
         </div>
 
+        <div class="admin-panel" id="panel-promo">
+          <div class="admin-form">
+            <h4>Créer un code promo</h4>
+            <form id="promoForm">
+              <div class="form-grid">
+                <div class="field"><label for="promoCode">Code</label><input id="promoCode" placeholder="BIENVENUE10" required></div>
+                <div class="field"><label for="promoDiscount">Réduction (%)</label><input id="promoDiscount" type="number" min="1" max="90" required></div>
+                <div class="field"><label for="promoMin">Commande minimum (€)</label><input id="promoMin" type="number" min="0" value="0"></div>
+              </div>
+              <button class="btn btn-primary btn-sm mt-sm" type="submit">Créer le code</button>
+            </form>
+          </div>
+          <div id="promoAdminList"></div>
+        </div>
+        
         <div class="admin-panel" id="panel-reglages">
           <div class="admin-form">
             <h4>Réglages du site</h4>
@@ -323,6 +339,9 @@
                   </div>
                 </div>
                 <div class="field field-full"><label for="setAbout">Texte « Service & À propos »</label><textarea id="setAbout"></textarea></div>
+                <div class="field field-full"><label for="setBannerText">Texte de la bannière de promotion (vide = pas de bannière)</label><input id="setBannerText" placeholder="-10% ce week-end avec le code WEEKEND10 !"></div>
+                <div class="field"><label for="setBannerStart">Du</label><input id="setBannerStart" type="date"></div>
+                <div class="field"><label for="setBannerEnd">Au</label><input id="setBannerEnd" type="date"></div>
               </div>
               <button class="btn btn-primary btn-sm mt-sm" type="submit">Enregistrer les réglages</button>
             </form>
@@ -340,6 +359,14 @@
   <div class="cart-head"><h3>Ta commande</h3><button class="icon-btn" id="cartCloseBtn" aria-label="Fermer">✕</button></div>
   <div class="cart-body" id="cartBody"></div>
   <div class="cart-foot" id="cartFoot" hidden>
+    <div class="field">
+      <label for="promoInput">Code promo</label>
+      <div style="display:flex;gap:8px;">
+        <input id="promoInput" placeholder="CODE2026" style="flex:1;">
+        <button type="button" class="btn btn-outline btn-sm" id="applyPromoBtn">Appliquer</button>
+      </div>
+      <span class="photo-status" id="promoStatus"></span>
+    </div>
     <div class="cart-total"><span>Total estimé</span><span id="cartTotal">0,00 €</span></div>
     <div class="field"><label for="custName">Ton nom</label><input id="custName"></div>
     <div class="field"><label for="custAddress">Adresse de livraison</label><input id="custAddress"></div>
