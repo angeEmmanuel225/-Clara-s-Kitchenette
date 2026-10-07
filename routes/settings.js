@@ -16,10 +16,10 @@ router.get("/", async (req, res) => {
 // PUT /api/settings — modifier les réglages (admin uniquement)
 router.put("/", requireAdmin, async (req, res) => {
   try {
-    const { whatsapp, ville, tiktok, heroTitle, heroSub, heroPhoto, about } = req.body;
+    const { whatsapp, ville, tiktok, heroTitle, heroSub, heroPhoto, bannerText, bannerStart, bannerEnd, about } = req.body;
     let settings = await Settings.findOne();
     if (!settings) settings = new Settings();
-    Object.assign(settings, { whatsapp, ville, tiktok, heroTitle, heroSub, heroPhoto, about });
+    Object.assign(settings, { whatsapp, ville, tiktok, heroTitle, heroSub, heroPhoto, bannerText, bannerStart, bannerEnd, about });
     await settings.save();
     res.json(settings);
   } catch (err) {
