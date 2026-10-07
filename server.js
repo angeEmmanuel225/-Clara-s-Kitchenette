@@ -25,7 +25,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Routes de l'API
-pp.use("/api/dishes", require("./routes/dishes"));
+app.use("/api/dishes", require("./routes/dishes"));
 app.use("/api/tutorials", require("./routes/tutorials"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/settings", require("./routes/settings"));
