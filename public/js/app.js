@@ -37,7 +37,8 @@ function categoryAccent(cat){
 }
 function mediaBlock(photo, alt, accentBg){
   var img = photo ? '<img src="'+esc(photo)+'" alt="'+esc(alt)+'" loading="lazy" onerror="this.remove()">' : "";
-  return '<div style="background:'+accentBg+';position:absolute;inset:0;"></div>'+img+'<span class="thumb-fallback">'+plateIcon()+'</span>';
+  var fallback = photo ? "" : '<span class="thumb-fallback">'+plateIcon()+'</span>';
+  return '<div style="background:'+accentBg+';position:absolute;inset:0;"></div>'+img+fallback;
 }
 function youTubeId(url){
   if(!url) return null;
