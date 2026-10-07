@@ -13,7 +13,10 @@ const settingsSchema = new mongoose.Schema(
       default:
         "Togo, Côte d'Ivoire, Mali, Burkina Faso — et quelques classiques d'Europe. Préparé maison à Lyon, livré partout en France.",
     },
-    heroPhoto: { type: String, default: "" },
+   heroPhoto: { type: String, default: "" },
+    bannerText: { type: String, default: "" },
+    bannerStart: { type: String, default: "" },
+    bannerEnd: { type: String, default: "" },
     about: {
       type: String,
       default:
