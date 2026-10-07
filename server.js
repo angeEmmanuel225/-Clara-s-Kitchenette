@@ -25,10 +25,11 @@ app.get("/api/health", (req, res) => {
 });
 
 // Routes de l'API
-app.use("/api/dishes", require("./routes/dishes"));
+pp.use("/api/dishes", require("./routes/dishes"));
 app.use("/api/tutorials", require("./routes/tutorials"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/settings", require("./routes/settings"));
+app.use("/api/promocodes", require("./routes/promocodes"));
 app.use("/api/admin", require("./routes/admin"));
 
 if (!MONGODB_URI) {
