@@ -49,6 +49,14 @@ var API = {};
   API.createReview = function (r) { return request("/api/reviews", "POST", r, false); }; // public, sans mot de passe
   API.deleteReview = function (id) { return request("/api/reviews/" + id, "DELETE", undefined, true); };
 
+  /* ---------- Codes promo ---------- */
+  API.getPromoCodes = function () { return request("/api/promocodes", "GET", undefined, true); };
+  API.createPromoCode = function (p) { return request("/api/promocodes", "POST", p, true); };
+  API.deletePromoCode = function (id) { return request("/api/promocodes/" + id, "DELETE", undefined, true); };
+  API.checkPromoCode = function (code, total) {
+    return request("/api/promocodes/check/" + encodeURIComponent(code) + "?total=" + total, "GET", undefined, false);
+  };
+
   /* ---------- Réglages ---------- */
   API.getSettings = function () { return request("/api/settings", "GET"); };
   API.updateSettings = function (s) { return request("/api/settings", "PUT", s, true); };
