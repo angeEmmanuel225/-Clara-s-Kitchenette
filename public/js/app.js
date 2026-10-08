@@ -128,7 +128,7 @@ function renderBanner(){
 }
 document.getElementById("promoBannerClose").addEventListener("click", function(){
   renderBanner.dismissed = true; document.getElementById("promoBanner").hidden = true;
-});   
+});
 
 /* ============ ACCUEIL ============ */
 function renderAccueil(){
@@ -519,7 +519,7 @@ function renderReviewAdminList(){
   }).join("") || '<p style="color:var(--text-soft);">Aucun avis pour le moment.</p>';
 }
 function fillSettingsForm(){
-document.getElementById("setWhatsapp").value = STATE.settings.whatsapp||"";
+  document.getElementById("setWhatsapp").value = STATE.settings.whatsapp||"";
   document.getElementById("setVille").value = STATE.settings.ville||"";
   document.getElementById("setTiktok").value = STATE.settings.tiktok||"";
   document.getElementById("setHeroTitle").value = STATE.settings.heroTitle||"";
