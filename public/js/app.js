@@ -14,6 +14,7 @@ var DEFAULT_SETTINGS = {
   heroTitle: "Les saveurs d'Afrique, cuisinées avec amour",
   heroSub: "Togo, Côte d'Ivoire, Mali, Burkina Faso — et quelques classiques d'Europe. Préparé maison à Lyon, livré partout en France.",
   heroPhoto: "",
+  bannerText: "", bannerStart: "", bannerEnd: "",
   about: "Clara's Kitchenette prépare, à la commande, des plats togolais, ivoiriens, maliens et burkinabés — avec quelques classiques européens en clin d'œil. Chaque part est cuisinée maison à Lyon puis livrée avec soin partout en France."
 };
 
@@ -21,7 +22,8 @@ var DEFAULT_SETTINGS = {
 var STATE = {
   dishes: [], tutorials: [], reviews: [], settings: {},
   cart: [], isAdmin: false, filterCategory: "Tous",
-  activeTutorial: null, adminTab: "plats", ratingDraft: 0
+  activeTutorial: null, adminTab: "plats", ratingDraft: 0,
+  promoCodes: [], appliedPromo: null
 };
 
 /* ============ PETITS OUTILS ============ */
@@ -112,6 +114,22 @@ function route(){
 }
 window.addEventListener("hashchange", route);
 
+/* ============ BANDEAU DE PROMOTION ============ */
+// Affiché seulement si un texte est renseigné ET si la date du jour est dans la période choisie.
+function renderBanner(){
+  var s = STATE.settings, el = document.getElementById("promoBanner");
+  var d = new Date();
+  var today = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2);
+  var active = s.bannerText && (!s.bannerStart || today >= s.bannerStart) && (!s.bannerEnd || today <= s.bannerEnd);
+  if(active && !renderBanner.dismissed){
+    document.getElementById("promoBannerText").textContent = s.bannerText;
+    el.hidden = false;
+  } else { el.hidden = true; }
+}
+document.getElementById("promoBannerClose").addEventListener("click", function(){
+  renderBanner.dismissed = true; document.getElementById("promoBanner").hidden = true;
+});   
+
 /* ============ ACCUEIL ============ */
 function renderAccueil(){
   document.getElementById("heroTitle").textContent = STATE.settings.heroTitle;
@@ -200,6 +218,17 @@ document.addEventListener("click", function(e){
 });
 
 /* ============ PANIER ============ */
+function cartRawTotal(){
+  return STATE.cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+}
+// Total après réduction. Si la commande passe sous le minimum du code, la réduction est retirée.
+function cartDiscount(){
+  var p = STATE.appliedPromo, raw = cartRawTotal();
+  if(!p || raw < p.minOrder) return 0;
+  return Math.round(raw * p.discountPercent) / 100;
+}
+function cartFinalTotal(){ return cartRawTotal() - cartDiscount(); }
+
 function updateCartCount(){
   var count = STATE.cart.reduce(function(s,i){return s+i.qty;},0);
   var badge = document.getElementById("cartCount");
@@ -219,8 +248,14 @@ function renderCartBody(){
       '<button class="cart-item-remove" data-id="'+i.id+'">Retirer</button></div>'+
       '<div style="font-weight:700;">'+euros(i.price*i.qty)+'</div></div>';
   }).join("");
-  var total = STATE.cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  document.getElementById("cartTotal").textContent = euros(total);
+  var disc = cartDiscount();
+  document.getElementById("cartTotal").textContent = euros(cartFinalTotal());
+  var st = document.getElementById("promoStatus");
+  if(STATE.appliedPromo){
+    st.textContent = disc > 0
+      ? "Code " + STATE.appliedPromo.code + " appliqué : -" + euros(disc)
+      : "Code " + STATE.appliedPromo.code + " : commande minimum de " + euros(STATE.appliedPromo.minOrder) + " non atteinte.";
+  }
 }
 document.getElementById("cartBody").addEventListener("click", function(e){
   var btn = e.target.closest(".cart-item-remove");
@@ -234,6 +269,22 @@ document.getElementById("cartBtn").addEventListener("click", openCart);
 document.getElementById("cartCloseBtn").addEventListener("click", closeCart);
 document.getElementById("cartOverlay").addEventListener("click", closeCart);
 
+document.getElementById("applyPromoBtn").addEventListener("click", function(){
+  var code = document.getElementById("promoInput").value.trim();
+  var st = document.getElementById("promoStatus");
+  if(!code){ st.textContent = "Entre un code."; return; }
+  API.checkPromoCode(code, cartRawTotal()).then(function(res){
+    if(res.ok && res.data.valid){
+      STATE.appliedPromo = { code: res.data.code, discountPercent: res.data.discountPercent, minOrder: res.data.minOrder || 0 };
+      renderCartBody();
+    } else {
+      STATE.appliedPromo = null;
+      renderCartBody();
+      st.textContent = (res.data && res.data.message) || "Code promo invalide.";
+    }
+  }).catch(function(){ st.textContent = "Impossible de vérifier le code pour le moment."; });
+});
+
 document.getElementById("sendOrderBtn").addEventListener("click", function(){
   if(STATE.cart.length===0) return;
   var name = document.getElementById("custName").value.trim();
@@ -241,8 +292,11 @@ document.getElementById("sendOrderBtn").addEventListener("click", function(){
   var date = document.getElementById("custDate").value;
   var lines = ["Bonjour Clara's Kitchenette, je souhaite commander :",""];
   STATE.cart.forEach(function(i){ lines.push("- "+i.qty+" x "+i.name+" ("+euros(i.price*i.qty)+")"); });
-  var total = STATE.cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  lines.push("", "Total estime : "+euros(total));
+  if(cartDiscount() > 0){
+    lines.push("", "Sous-total : "+euros(cartRawTotal()));
+    lines.push("Code promo "+STATE.appliedPromo.code+" (-"+STATE.appliedPromo.discountPercent+"%) : -"+euros(cartDiscount()));
+  }
+  lines.push("", "Total estime : "+euros(cartFinalTotal()));
   if(name) lines.push("", "Nom : "+name);
   if(address) lines.push("Adresse de livraison : "+address);
   if(date) lines.push("Date souhaitee : "+date);
@@ -398,7 +452,43 @@ function renderAdmin(){
   document.querySelectorAll(".admin-panel").forEach(function(p){ p.classList.toggle("active", p.id==="panel-"+STATE.adminTab); });
   document.querySelectorAll(".admin-tab-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.tab===STATE.adminTab); });
   renderDishAdminList(); renderTutoAdminList(); renderReviewAdminList(); fillSettingsForm();
+  loadPromoCodes();
 }
+
+/* ============ CODES PROMO (espace pro) ============ */
+function loadPromoCodes(){
+  API.getPromoCodes().then(function(res){
+    if(res.ok){ STATE.promoCodes = normalizeIds(res.data); renderPromoAdminList(); }
+  });
+}
+function renderPromoAdminList(){
+  document.getElementById("promoAdminList").innerHTML = STATE.promoCodes.map(function(p){
+    return '<div class="admin-list-item"><div><strong>'+esc(p.code)+'</strong>'+
+      '<div class="meta">-'+p.discountPercent+'% dès '+euros(p.minOrder||0)+' de commande</div></div>'+
+      '<div class="admin-item-actions"><button class="icon-action" data-del-promo="'+p.id+'" aria-label="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14"/></svg></button></div></div>';
+  }).join("") || '<p style="color:var(--text-soft);">Aucun code promo pour le moment.</p>';
+}
+document.getElementById("promoForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var payload = {
+    code: document.getElementById("promoCode").value.trim(),
+    discountPercent: parseFloat(document.getElementById("promoDiscount").value),
+    minOrder: parseFloat(document.getElementById("promoMin").value) || 0
+  };
+  API.createPromoCode(payload).then(function(res){
+    if(!res.ok){ showToast((res.data && res.data.error) || "Erreur lors de la création."); return; }
+    document.getElementById("promoForm").reset();
+    loadPromoCodes(); showToast("Code promo créé.");
+  }).catch(function(){ showToast("Impossible de contacter le serveur."); });
+});
+document.getElementById("promoAdminList").addEventListener("click", function(e){
+  var del = e.target.closest("[data-del-promo]"); if(!del) return;
+  if(!confirm("Supprimer ce code promo ?")) return;
+  API.deletePromoCode(del.dataset.delPromo).then(function(res){
+    if(!res.ok){ showToast("Erreur lors de la suppression."); return; }
+    loadPromoCodes(); showToast("Code supprimé.");
+  });
+});
 document.getElementById("adminLogoutBtn").addEventListener("click", function(){
   STATE.isAdmin=false; API.adminLogout(); renderAdmin();
 });
@@ -429,13 +519,16 @@ function renderReviewAdminList(){
   }).join("") || '<p style="color:var(--text-soft);">Aucun avis pour le moment.</p>';
 }
 function fillSettingsForm(){
-  document.getElementById("setWhatsapp").value = STATE.settings.whatsapp||"";
+document.getElementById("setWhatsapp").value = STATE.settings.whatsapp||"";
   document.getElementById("setVille").value = STATE.settings.ville||"";
   document.getElementById("setTiktok").value = STATE.settings.tiktok||"";
   document.getElementById("setHeroTitle").value = STATE.settings.heroTitle||"";
   document.getElementById("setHeroSub").value = STATE.settings.heroSub||"";
   document.getElementById("setHeroPhoto").value = STATE.settings.heroPhoto||"";
   document.getElementById("setAbout").value = STATE.settings.about||"";
+  document.getElementById("setBannerText").value = STATE.settings.bannerText||"";
+  document.getElementById("setBannerStart").value = STATE.settings.bannerStart||"";
+  document.getElementById("setBannerEnd").value = STATE.settings.bannerEnd||"";
   heroPhotoPicker.refresh();
 }
 
@@ -565,11 +658,14 @@ document.getElementById("settingsForm").addEventListener("submit", function(e){
     heroTitle: document.getElementById("setHeroTitle").value.trim(),
     heroSub: document.getElementById("setHeroSub").value.trim(),
     heroPhoto: document.getElementById("setHeroPhoto").value.trim(),
+    bannerText: document.getElementById("setBannerText").value.trim(),
+    bannerStart: document.getElementById("setBannerStart").value,
+    bannerEnd: document.getElementById("setBannerEnd").value,
     about: document.getElementById("setAbout").value.trim()
   };
   API.updateSettings(payload).then(function(res){
     if(!res.ok){ showToast((res.data && res.data.error) || "Erreur lors de l'enregistrement."); return; }
-    return loadAll().then(function(){ renderAccueil(); showToast("Réglages enregistrés."); });
+    return loadAll().then(function(){ renderBanner(); renderAccueil(); showToast("Réglages enregistrés."); });
   }).catch(function(){ showToast("Impossible de contacter le serveur."); });
 });
 
@@ -582,7 +678,7 @@ var slowTimer = setTimeout(function(){
 }, 4000);
 
 loadAll().then(function(){
-  renderAccueil(); renderFaq(); updateCartCount(); route();
+  renderBanner(); renderAccueil(); renderFaq(); updateCartCount(); route();
 }).catch(function(err){
   console.error(err);
   if(loadingText) loadingText.textContent = "Impossible de contacter le serveur pour le moment. Vérifie la variable MONGODB_URI sur Render, puis recharge la page.";
